@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'movie/js/jquery-3.1.1.min.js'%}"></script>
+<title>TBW | The Binge Watcher</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'movie/css/index.css'%}">
+</head>
+<body>
+    <div id='side_color2'></div>    
+    <div id='side_color1'></div>
+
+    <div id='tbw_container'>
+        <span id='the'>THE</span>
+        <span id='binge'><b>BIN<br>GE</b></span>
+        <p id='watcher'><span id='white_watcher'>WATCH</span>&nbsp;&nbsp;&nbsp;ER.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+    </div>
+
+    <div id='navigation'>
+        <div id='home_but' class='navbut active'>HOME</div>
+        <div class='navbut'>ABOUT</div>
+        <div class='navbut'>GENRES</div>
+        <div class='navbut' id='login_but'>LOGIN</div>
+    </div>
+
+    <form action='#' method='post' id='search'>
+        <input type='text' id='search_tag' name='search_tag'/>
+        <div id='mag'></div>
+    </form>
+
+    <div id='search_result'>
+        <!--<div class='sres'>
+            <img src="{% static 'movie/images/cat4.jpg' %}" class='search_poster'/>
+            <div class='sres_des'>
+                BREAKING BAD<br>
+                <span class='sres_year'>2010</span>
+            </div>
+        </div>-->
+    </div>
+
+    <form id='login_form' action='#' method='post'>
+        <div class='ip_area'>
+            <label for='usr' id='usr_label'><b>USERNAME:&nbsp;&nbsp;</b></label>
+            <input type='text' id='usr' class='ipt' name='usr'><br>
+        </div>
+        <div class='ip_area'>
+            <br>
+            <label for='pass' id='pass_label'><b>PASSWORD:&nbsp;&nbsp;</b></label>
+            <input type='password' id='pass' class='ipt' name='pass'><br>
+        </div>
+        <div class='sq_area'>
+            <br>
+            <input type='submit' id='submit' name='submit' value='LOGIN'>
+        </div>
+        <div class='sq_area' id='social_area'>
+            <button id='t_but' class='s_but' type='button'>tw</button>
+            <button id='g_but' class='s_but' type='button'>g+</button>
+            <button id='f_but' class='s_but' type='button'>f</button>
+            <br>
+        </div>
+        <div id='sup_area'><b><a href='#' class='sup'>FORGOT PASSWORD</a> OR <a href='#' class='sup'>SIGN UP</a></b></div>
+        <div id='cover'></div>
+    </form>
+
+
+    <div id='bord1'></div>
+    <div id='bord2'></div>
+    <div id='bord3'></div>
+    <div id='bord4'></div>
+
+    <script>
+        $(document).ready(function(){
+            var midwinw = $(window).width()/2;
+            var midwinh = $(window).height()/2;
+            $('#the').css('left',(midwinw-$('#binge').innerWidth()/2)+'px');
+            $('#the').css('top',(midwinh-$('#binge').innerHeight()/2-$('#the').innerHeight())+'px');
+            $('#watcher').css('top',(midwinh + $('#binge').innerHeight()/2) +'px');
+
+
+            $('#search_tag').keyup(function(){
+                var c = $('#search_tag').val();
+                $.getJSON("{% url 'movie:searchres' %}",{ key : c },function(result){
+                    $('#search_result').html("");
+                    $.each(result["divset"], function(i, val){
+                        $('#search_result').append(val);
+                    });
+                });
+            });
+
+            $('#login_but').click(function(){
+                $('#side_color1').animate({
+                    width: '35%'
+                },500);
+
+                $('#tbw_container').animate({
+                    left: '-15%'
+                },500);
+
+                $('#cover').animate({
+                    left: '-100%'
+                },500)
+
+                $('#login_form').animate({
+                    right: '10%'
+                },500);
+
+                $('#home_but').removeClass('active');
+
+                $('#login_but').addClass('active');
+            });
+        });
+    </script>
+</body>
+</html>
