@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Movies
+from .models import Movies, Ratings, Users, MovieInfo
 from django.contrib.staticfiles.templatetags.staticfiles import static
+
+import pandas as pd
 
 # Create your views here.
 def index(request):
@@ -24,3 +26,26 @@ def searchres(request):
         return JsonResponse({"divset": [""]})
     else:
         return JsonResponse({"divset": divset})
+
+
+def addRatings(request):
+    #file = pd.read_csv('../../res/small/ratings.csv')
+    file = pd.read_csv("C:/Users/shp/Desktop/Movie Recommendation system/res/small/ratings.csv")
+    u_id = list(file['userId'])
+    m_id = list(file['movieId'])
+    rate = list(file['rating'])
+    length = len(u_id)
+    # 65507
+    '''
+    for i in range(65500,length):
+        try:
+            r = Ratings.objects.get(pk=i)
+            print(r, i, "done")
+        except:
+            u = Users.objects.get(u_id=u_id[i])
+            m = MovieInfo.objects.get(m_id=m_id[i])
+            row = Ratings(user=u, movie=m, rating=int(rate[i]))
+            print(row, i)
+            row.save()
+    '''
+    return HttpResponse("kjsdagfkalshf")
