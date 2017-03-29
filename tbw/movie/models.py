@@ -13,6 +13,7 @@ class MovieInfo(models.Model):
     year = models.IntegerField()
     genre = models.CharField(max_length=100)
     poster = models.CharField(max_length=300)
+    imdb = models.CharField(max_length=20, default="")
 
 
 class Users(models.Model):
@@ -37,3 +38,20 @@ class PredictionModel(models.Model):
     userId = models.IntegerField()
     movieId = models.IntegerField()
     rating = models.FloatField()
+
+
+class Unrated(models.Model):
+    user_id = models.IntegerField()
+    movie_id = models.IntegerField()
+
+
+class Ratings2(models.Model):
+    userId = models.IntegerField()
+    movieId = models.IntegerField()
+    rating = models.FloatField(default=0)
+
+
+class UMMat(models.Model):
+    userId = models.IntegerField()
+    movieId = models.IntegerField()
+    rating = models.IntegerField()

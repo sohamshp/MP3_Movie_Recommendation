@@ -89,8 +89,14 @@ for i in range(length):
         int(i),
         int(u_id[i]),
         int(m_id[i]),
-        int()
+        int(rate[i])
     )
+    print(row)
+    insertions.append(row)
+
+c.executemany("INSERT INTO movie_ratings2 VALUES (?,?,?,?)", insertions)
+
+conn.commit()
 
 '''
 
@@ -121,8 +127,36 @@ conn.commit()
 
 '''
 
-#for i in c.execute("SELECT count(*) FROM movie_predictionmodel"):
-#    print(i)
+### Adding stored ratings
+'''
+
+file = pd.read_csv('../res/small/userMovieMat.csv')
+
+matrix = file.as_matrix()
+
+insertions = []
+
+i=0
+for u in range(500):
+    for m in range(3884):
+        row = (
+            i,
+            int(u),
+            int(m),
+            int(matrix[u][m])
+        )
+        insertions.append(row)
+        i += 1
+
+c.executemany("INSERT INTO movie_ummat VALUES (?,?,?,?)", insertions)
+
+conn.commit()
+
+'''
+
+
+for i in c.execute("SELECT count(*) FROM movie_ummat"):
+    print(i)
 
 c.close()
 conn.close()
