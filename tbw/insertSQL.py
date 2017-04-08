@@ -154,9 +154,84 @@ conn.commit()
 
 '''
 
+### Adding gender avgs
+'''
 
-for i in c.execute("SELECT count(*) FROM movie_ummat"):
-    print(i)
+dir = '../res/small/avgs/'
+
+genders = ['M', 'F']
+
+insertions = []
+pk=0
+for i in range(2):
+    file = pd.read_csv(dir+'genderAvg'+str(i)+'.csv')
+    print(len(file['0']))
+    for j in range(len(file['0'])):
+        row = (
+            pk,
+            i,
+            genders[i],
+            j,
+            int(file['0'][j]),
+            int(file['1'][j]),
+            int(file['2'][j]),
+            int(file['3'][j]),
+            int(file['4'][j]),
+            float(file['5'][j])
+        )
+        pk += 1
+        insertions.append(row)
+
+
+c.executemany("INSERT INTO movie_genderavg VALUES (?,?,?,?,?,?,?,?,?,?)", insertions)
+
+conn.commit()
+
+'''
+
+
+### Adding Age avgs
+'''
+
+dir = '../res/small/avgs/'
+
+ages = ['Under 18', '18-24', '25-34', '35-44', '45-49', '50-55', '56+']
+agesVal = [1, 18, 25, 35, 45, 50, 56]
+
+insertions = []
+pk=0
+for i in range(7):
+    file = pd.read_csv(dir+'ageAvg'+str(i)+'.csv')
+    print(len(file['0']))
+    for j in range(len(file['0'])):
+        row = (
+            pk,
+            i,
+            agesVal[i],
+            ages[i],
+            j,
+            int(file['0'][j]),
+            int(file['1'][j]),
+            int(file['2'][j]),
+            int(file['3'][j]),
+            int(file['4'][j]),
+            float(file['5'][j])
+        )
+        pk += 1
+        #print(row)
+        insertions.append(row)
+
+
+
+c.executemany("INSERT INTO movie_ageavg VALUES (?,?,?,?,?,?,?,?,?,?,?)", insertions)
+
+conn.commit()
+
+'''
+
+
+#for i in c.execute("SELECT count(*) FROM movie_ageavg"):
+#    print(i)
 
 c.close()
 conn.close()

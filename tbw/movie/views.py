@@ -73,6 +73,7 @@ def addRatings(request):
 
 def predict(request, u_id):
     u_id = int(u_id)
+    context = {}
     p_rates = PredictionModel.objects.filter(userId=u_id).order_by('-rating')
     #for i in p_rates[:10]:
     #    print(i.userId, i.movieId, i.rating)
@@ -89,11 +90,17 @@ def predict(request, u_id):
     #    print(i.userId, i.movieId, i.rating)
 
     mset = []
-    for i in p_rates[:20]:
-        movinf = {}
+    rset = []
+    for i in p_rates[:10]:
         mov = MovieInfo.objects.get(m_id=i.movieId)
-        mset.append(mov)
-    return HttpResponse(mset)
+        rr = i.rating
+        rr *= 18
+        rr = int(rr)
+        if rr > 100:
+            rr = 100
+        mset.append([mov,rr])
+    context['movieList'] = mset
+    return render(request, 'movie/rated.html', context)
 
 def makeUnrated(request):
     file = pd.read_csv("C:/Users/shp/Desktop/Movie Recommendation system/res/small/userMovieMat.csv")
@@ -146,3 +153,74 @@ def getImdb(request):
         except:
             print('noooooo')
     return HttpResponse('wooo')
+
+
+def movieData(request):
+    yearList = request.GET['years']
+    genreList = request.GET['genres']
+
+    '''years
+        2017 : 2017+
+        2014 : 2014-16
+        2012 : 2012-14
+        2007 : 2007-12
+        2000 : 2000-07
+        1900 : 1900-1999
+    '''
+    '''genres
+        Action
+        Adventure
+        Animation
+        Children's
+        Comedy
+        Crime
+        Documentary
+        Drama
+        Fantasy
+        Film-Noir
+        Horror
+        Musical
+        Mystery
+        Romance
+        Sci-Fi
+        Thriller
+        War
+        Western
+    '''
+
+    allMovies = MovieInfo.objects.all()
+
+
+    return JsonResponse({ 'msg':'not done yet...' })
+
+
+def movieView(request, m_id):
+    try:
+        movie = MovieInfo.objects.get(pk=m_id)
+        context = {
+            'movie': movie
+        }
+        return render(request, 'movie/movie_page.html', context)
+    except:
+        return Http404("Movie Not Found!")
+
+
+def ratedView(request):
+    return HttpResponse('rated')
+
+
+def signUpView(request):
+    return render(request, 'movie/signup.html', {})
+
+
+def userView(request):
+    return render(request, 'movie/user.html', {})
+
+
+def catView(request):
+    return render(request, 'movie/category.html', {})
+
+
+def newPredict(request, u_id):
+    user = Users.objects.get(u_id=u_id)
+    rGender = GenderAvg.objects.get()

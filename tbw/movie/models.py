@@ -15,6 +15,9 @@ class MovieInfo(models.Model):
     poster = models.CharField(max_length=300)
     imdb = models.CharField(max_length=20, default="")
 
+    def __str__(self):
+        return str(self.m_id) + " - " + str(self.name) + " (" + str(self.year) + ") <br>" + str(self.genre) + "<br><br>"
+
 
 class Users(models.Model):
     u_id = models.IntegerField(unique=True)
@@ -55,3 +58,40 @@ class UMMat(models.Model):
     userId = models.IntegerField()
     movieId = models.IntegerField()
     rating = models.IntegerField()
+
+
+class JobAvg(models.Model):
+    jobId = models.IntegerField()
+    job = models.CharField(max_length=100)
+    movieId = models.IntegerField()
+    count1 = models.IntegerField()
+    count2 = models.IntegerField()
+    count3 = models.IntegerField()
+    count4 = models.IntegerField()
+    count5 = models.IntegerField()
+    avgRating = models.FloatField()
+
+
+class AgeAvg(models.Model):
+    ageIndex = models.IntegerField()
+    ageVal = models.IntegerField()
+    ageRange = models.CharField(max_length=10)
+    movieId = models.IntegerField()
+    count1 = models.IntegerField()
+    count2 = models.IntegerField()
+    count3 = models.IntegerField()
+    count4 = models.IntegerField()
+    count5 = models.IntegerField()
+    avgRating = models.FloatField()
+
+
+class GenderAvg(models.Model):
+    genderIndex = models.IntegerField()
+    gender = models.CharField(max_length=1)
+    movieId = models.IntegerField()
+    count1 = models.IntegerField()
+    count2 = models.IntegerField()
+    count3 = models.IntegerField()
+    count4 = models.IntegerField()
+    count5 = models.IntegerField()
+    avgRating = models.FloatField()

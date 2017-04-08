@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-3.1.1.min.js"></script>
+<title>TBW | The Binge Watcher</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'KatahdinRound';
+    src: url("fonts/KatahdinRound.otf") format("opentype");
+}
+
+body,html{
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+    font-size:100%;
+}
+
+#tbw_container{
+    position:absolute;
+    height:100%;
+    width:100%;
+    top:0%;
+    left:0%;
+}
+
+
+#the{
+    font-family:'katahdinRound';
+    color: white;
+    font-size:1.7em;
+    position:absolute;
+    left:50%;
+    top:50%;
+}
+
+#binge{
+    font-family:'katahdinRound';
+    color: Black;
+    line-height:0.9;
+    font-size:9em;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+
+#watcher{
+    font-family:'katahdinRound';
+    color: black;
+    font-size:1.7em;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    transform-origin: 0%;
+}
+
+#white_watcher{
+    color:white;
+}
+
+#side_color1{
+    height:100%;
+    width:50%;
+    background-color:#ff8b00;//#ff8b00;//#fa6801;//#f26c4f;
+    position:absolute;
+    left:0%;
+    top:0%;
+}
+
+#side_color2{
+    height:100%;
+    width:100%;
+    background-color:#fdfdfd;
+    position:absolute;
+    left:0%;
+    top:0%;
+}
+
+
+/*############################# Borders #################################*/
+
+
+#bord1{
+    height:40px;
+    width:100%;
+    position:fixed;
+    top:0%;
+    left:0%;
+    background-color: white; 
+}
+
+#bord2{
+    height:100%;
+    width:40px;
+    position:fixed;
+    top:0%;
+    right:0%;
+    background-color: white; 
+}
+
+#bord3{
+    height:40px;
+    width:100%;
+    position:fixed;
+    bottom:0%;
+    left:0%;
+    background-color: white; 
+}
+
+#bord4{
+    height:100%;
+    width:40px;
+    position:fixed;
+    top:0%;
+    left:0%;
+    background-color: white; 
+}
+
+
+/* ######################### navbar ##########################*/
+
+
+
+#navigation{
+    position:fixed;
+    right:40px;
+    top:50px;
+}
+
+.navbut{
+    padding:10px;
+    padding-bottom:5px;
+    font-family:'katahdinRound';
+    color: black;
+    font-size:1em;
+    display:inline;
+    cursor:default;
+}
+
+.active{
+    border-bottom: 2px solid #ff8b00;
+}
+
+.navbut:hover{
+    border-bottom: 2px solid #ff8b00;
+}
+
+
+/*############################# Search bar ##################################*/
+
+
+
+#search{
+    position:fixed;
+    left:60px;
+    top:50px;
+    padding:5px;
+    border-bottom: 1px solid white;
+    width:13%;
+    padding-left:2%;
+}
+
+#search_tag{
+    width:90%;
+    border-color:transparent;
+    outline:none;
+    background-color:transparent;
+    font-family:'katahdinRound';
+    color: black;
+    font-size:0.8em;
+}
+
+#search_tag:focus{
+    border-color:transparent;
+    outline:none;
+    background-color:transparent;
+}
+
+#mag{
+    width:20%;
+    height:60%;
+    position:absolute;
+    top:20%;
+    left:0%;
+    background-image:url('images/mag.png');
+    background-size:contain;
+    background-position: center left;
+    background-repeat: no-repeat;
+}
+
+#dhaka{
+    color:black;
+    position:absolute;
+}
+
+#search_result{
+    position:fixed;
+    top:100px;
+    left:60px;
+    background-color:white;
+    width:15%;
+    padding:2px;
+}
+
+.sres{
+    position:relative;
+    background-color:white;
+    height:80px;
+    width:100%;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.search_poster{
+    position:absolute;
+    height: 70px;
+    width: 47.25px;
+    top: 2px;
+    left: 2px;
+}
+
+.sres_des{
+    padding-left: 60px;
+    padding-top:8px;
+    padding-right:5px;
+    font-family: 'KatahdinRound';
+    font-size: 0.8em;
+}
+
+.sres_year{
+    font-family:'Open Sans Condensed';
+}
+
+.sres:hover{
+    background-color:#F8F8F8;
+}
+
+/*############################# login form ##################################*/
+
+
+#login_form{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size:1.2em;
+    color:black;
+    width:25%;
+    position:absolute;
+    margin-right:5px;
+    padding:2%;
+    top:50%;
+    right:5%;
+    transform:translate(0%,-35%);
+    overflow:hidden;
+}
+
+.ip_area{
+    width:100%;
+    border-bottom:2px solid #ff8b00;
+    padding-bottom:2px;
+}
+
+.ipt{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 1em;
+    background-color:transparent;
+    width:100%;
+    outline:none;
+    border:none;
+}
+
+.ipt:focus{
+    outline:none;
+    border:none;
+}
+
+.sq_area{
+    width:100%;
+}
+
+#submit{
+    width:100%;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size:1em;
+    color:white;
+    background-color:#ff8b00;
+    border: none;
+    outline: none;
+}
+
+#social_area{
+    margin-top:3.5%;
+}
+
+.s_but{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size:1em;
+    width:15%;
+    margin-left:1.6%;
+    float:right;
+    border:none;
+    outline:none;
+    color:white;
+}
+
+.s_but:focus{
+    border:none;
+    outline:none;
+}
+
+#f_but{
+    background-color:#3b5998;
+}
+
+#g_but{
+    background-color:#d34836;
+}
+
+#t_but{
+    background-color:#00aced;
+}   
+
+#sup_area{
+    text-align:right;
+    margin-top:2%;
+    color:black;
+    font-size:0.8em;
+    width:100%;
+    float:right;
+}
+
+.sup{
+    text-decoration: none;
+    color:#ff8b00;
+}
+
+.sup:visited{
+    text-decoration: none;
+    color:#ff8b00;
+}
+
+.sup:active{
+    text-decoration: none;
+    color:#ff8b00;
+}
+
+#cover{
+    height:100%;
+    width:100%;
+    background-color:#fdfdfd;
+    position:absolute;
+    top:0%;
+    left:0%;
+}
+
+</style>
+</head>
+<body>
+    <div id='side_color2'></div>    
+    <div id='side_color1'></div>
+
+    <div id='tbw_container'>
+        <span id='the'>THE</span>
+        <span id='binge'><b>BIN<br>GE</b></span>
+        <p id='watcher'><span id='white_watcher'>WATCH</span>&nbsp;&nbsp;&nbsp;ER.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+    </div>
+
+    <div id='navigation'>
+        <div id='home_but' class='navbut active'>HOME</div>
+        <div class='navbut'>ABOUT</div>
+        <div class='navbut'>GENRES</div>
+        <div class='navbut' id='login_but'>LOGIN</div>
+    </div>
+
+    <form action='#' method='post' id='search'>
+        <input type='text' id='search_tag' name='search_tag'/>
+        <div id='mag'></div>
+    </form>
+
+    <div id='search_result'>
+        <div class='sres'>
+            <img src='images/cat4.jpg' class='search_poster'/>
+            <div class='sres_des'>
+                BREAKING BAD<br>
+                <span class='sres_year'>2010</span>
+            </div>
+        </div>
+        <div class='sres'>
+            <img src='images/cat3.jpg' class='search_poster'/>
+            <div class='sres_des'>
+                THE BIG BANG THEORY<br>
+                <span class='sres_year'>2009</span>
+            </div>
+        </div>
+        <div class='sres'>
+            <img src='images/cat2.jpg' class='search_poster'/>
+            <div class='sres_des'>
+                SHERLOCK<br>
+                <span class='sres_year'>2012</span>
+            </div>
+        </div>
+        <div class='sres'>
+            <img src='images/cat4.jpg' class='search_poster'/>
+            <div class='sres_des'>
+                BREAKING BAD<br>
+                <span class='sres_year'>2010</span>
+            </div>
+        </div>
+        <div class='sres'>
+            <img src='images/cat3.jpg' class='search_poster'/>
+            <div class='sres_des'>
+                THE BIG BANG THEORY<br>
+                <span class='sres_year'>2009</span>
+            </div>
+        </div>
+    </div>
+
+    <form id='login_form' action='#' method='post'>
+        <div class='ip_area'>
+            <label for='usr' id='usr_label'><b>USERNAME:&nbsp;&nbsp;</b></label>
+            <input type='text' id='usr' class='ipt' name='usr'><br>
+        </div>
+        <div class='ip_area'>
+            <br>
+            <label for='pass' id='pass_label'><b>PASSWORD:&nbsp;&nbsp;</b></label>
+            <input type='password' id='pass' class='ipt' name='pass'><br>
+        </div>
+        <div class='sq_area'>
+            <br>
+            <input type='submit' id='submit' name='submit' value='LOGIN'>
+        </div>
+        <div class='sq_area' id='social_area'>
+            <button id='t_but' class='s_but' type='button'>tw</button>
+            <button id='g_but' class='s_but' type='button'>g+</button>
+            <button id='f_but' class='s_but' type='button'>f</button>
+            <br>
+        </div>
+        <div id='sup_area'><b><a href='#' class='sup'>FORGOT PASSWORD</a> OR <a href='#' class='sup'>SIGN UP</a></b></div>
+        <div id='cover'></div>
+    </form>
+
+
+    <div id='bord1'></div>
+    <div id='bord2'></div>
+    <div id='bord3'></div>
+    <div id='bord4'></div>
+
+    <p id='dhaka'></p>
+
+    <script>
+        $(document).ready(function(){
+            var midwinw = $(window).width()/2;
+            var midwinh = $(window).height()/2;
+            $('#the').css('left',(midwinw-$('#binge').innerWidth()/2)+'px');
+            $('#the').css('top',(midwinh-$('#binge').innerHeight()/2-$('#the').innerHeight())+'px');
+            $('#watcher').css('top',(midwinh + $('#binge').innerHeight()/2) +'px');
+
+
+            $('#search_tag').keyup(function(){
+                $('#dhaka').html($('#search_tag').val());
+            });
+
+            $('#login_but').click(function(){
+                $('#side_color1').animate({
+                    width: '35%'
+                },500);
+
+                $('#tbw_container').animate({
+                    left: '-15%'
+                },500);
+
+                $('#cover').animate({
+                    left: '-100%'
+                },500)
+
+                $('#login_form').animate({
+                    right: '10%'
+                },500);
+
+                $('#home_but').removeClass('active');
+
+                $('#login_but').addClass('active');
+            });
+        });
+    </script>
+</body>
+</html>
