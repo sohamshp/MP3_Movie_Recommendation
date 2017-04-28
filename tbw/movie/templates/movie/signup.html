@@ -1,323 +1,94 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% load staticfiles %}
-<script src="{% static 'movie/js/jquery-3.1.1.min.js'%}"></script>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'movie/js/jquery-3.1.1.min.js'%}"></script>
 <title>TBW | The Binge Watcher</title>
-
-<style>
-@font-face {
-    font-family: 'KatahdinRound';
-    src: url("{% static 'movie/fonts/KatahdinRound.otf'%}") format("opentype");
-}
-
-@font-face {
-    font-family: 'Open Sans Condensed';
-    src: url("{% static 'movie/fonts/OpenSansCondensed.ttf'%}") format("truetype");
-}
-
-
-body,html{
-    height:100%;
-    width:100%;
-    margin:0;
-    padding:0;
-    font-size:100%;
-}
-
-#side_color1{
-    height:100%;
-    width:100%;
-    background-color:#444444;
-    position:fixed;
-    left:0%;
-    top:0%;
-}
-
-
-/* ######################### navbar ##########################*/
-
-
-
-#navigation{
-    position:absolute;
-    right:15.5%;
-    top:9%;
-}
-
-.navbut{
-    padding:10px;
-    padding-bottom:5px;
-    font-family:'katahdinRound';
-    color: white;
-    font-size:1em;
-    display:inline;
-    cursor:default;
-}
-
-.active{
-    border-bottom: 2px solid #ff8b00;
-}
-
-.navbut:hover{
-    border-bottom: 2px solid #ff8b00;
-}
-
-
-
-/*##################################body#############################*/
-
-#signup_form{
-    position:absolute;
-    width:60%;
-    height:100%;
-    left:20%;
-    top:20%;
-    margin-bottom:10%;
-    //background-color:white;
-}
-
-#img_area{
-    position:absolute;
-    left:0%;
-    width:30%;
-    height:0;
-    padding-top:30%;
-    overflow:hidden;
-    background-color:#fdfdfd;
-}
-
-#text_area{
-    position:absolute;
-    left:31%;
-    width:70%;
-    padding-bottom:10%; 
-    padding-left:5%;
-    padding-top:5%;
-    background-color:#fdfdfd;
-}
-
-#img_res{
-    opacity:0;
-    width:100%;
-    position:absolute;
-    left:50%;
-    top:40%;
-    transform: translate(-50%,-50%);
-}
-
-.choose_file{
-    position:absolute;
-    top:80%;
-    height:20%;
-    opacity:0;
-}
-
-#choose_file_facade{
-    position:absolute;
-    top:80%;
-    width:100%;
-    height:20%;
-    background-color:#ff8b00;
-    font-family: "Open Sans Condensed";
-    font-size:1em;
-    color:white;
-    text-align: center;
-    padding-top:5%;
-}
-
-.engulf{
-    width:40%;
-    display:inline-block;
-    margin-left:3%;
-    padding:1px;
-    border-radius:1px;
-}
-
-.descriptor{
-    font-family: "Open Sans Condensed";
-    font-size:1.3em;
-    color:#cccccc;
-}
-
-.tinp{
-    width:100%;
-    background-color:transparent;
-    color:black;
-    font-family: "Open Sans Condensed";
-    font-size: 1.3em;
-    outline:none;
-    border: none;
-    border-bottom:2px solid #ff8b00;
-}
-
-#eg3{
-    width:40%;
-    border:none;
-}
-
-#tinp3{
-    margin-left:10%; 
-    width:20%;
-}
-
-#gender,#profession,#country{
-    width:40%;
-    margin-left:10%;
-    outline: none;
-    border:none;
-    float:right;
-    background-color: transparent;
-    border-bottom:2px solid #ff8b00;
-    color:black;
-    font-family: "Open Sans Condensed";
-    font-size: 1.3em;
-}
-
-#eg5,#eg8,#eg9,#eg10{
-    width:85%;
-}
-
-#submit_but{
-    width:100%;
-    background-color:#ff8b00;
-    outline: none;
-    border: none;
-    font-family: "Open Sans Condensed";
-    font-size:1.5em;
-    color:white;
-    text-align: center;
-    position:absolute;
-    bottom:0px;
-    left:0px;
-    padding:1%;
-}
-
-#submit_but:hover, #submit_but:focus{
-    background-color:#ffa51a;
-} 
-
-#logo{
-    font-family:'Open Sans Condensed';
-    font-size: 2em;
-    color: white;
-    position: absolute;
-    left: 20%;
-    top:7%;
-}
-
-#backdrop{
-    font-family:"KatahdinRound";
-    font-size:20em;
-    color:#414141;
-    position:fixed;
-    bottom:0%;
-    left:5%;
-    line-height:1;
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'movie/css/signup.css'%}">
 </head>
-<body>    
+<body>
+
     <div id='side_color1'></div>
     <span id='backdrop'><b>SIGN UP.</b></span>
     <span id='logo'>TBW</span>
 
     <div id='navigation'>
-        <div class='navbut' id='home_but'>HOME</div>
-        <div class='navbut'>ABOUT</div>
-        <div class='navbut'>GENRES</div>
-        <div class='navbut' id='login_but'>LOGIN</div>
+        <a class='navbut' id='home_but' href="{% url 'movie:index' %}">HOME</a>
+        <a class='navbut' id='about_but'>ABOUT</a>
+        <a class='navbut' id='rated_but' href="{% url 'movie:rated' %}">MOVIES</a>
+        <a class='navbut' id='login_but' href="{% url 'movie:login' %}">LOGIN</a>
     </div>
 
-    <form id='signup_form' action='#' method='post'>
+    <form id='signup_form' enctype='multipart/form-data' method='post'>
+        {% csrf_token %}
         <div id='img_area'>
             <img id='img_res' src='#'/>
             <div id='choose_file_facade'><b>CHOOSE PIC</b></div>
-            <input class='choose_file' type='file' name='propic' accept="image/gif, image/jpeg, image/png"/>
+            {{ form.image }}
         </div>
         <div id='text_area'>
             <div class='engulf' id='eg1'>
-                <label for='fname' class='descriptor'>First Name<br></label>
-                <input class='tinp' type='text' name='fname'>
+                <span class='descriptor'>First Name<br></span>
+                {{ form.firstName }}
             </div>
             <div class='engulf' id='eg2'>
-                <label for='lname' class='descriptor'>Last Name<br></label>
-                <input class='tinp' type='text' name='lname'>
+                <span class='descriptor'>Last Name<br></span>
+                {{ form.lastName }}
             </div>
             <div class='engulf' id='eg5'>
-                <label for='email' class='descriptor'><br>Email<br></label>
-                <input class='tinp' type='email' name='email'>
+                <span class='descriptor'><br>Email<br></span>
+                {{ form.email }}
             </div>
             <div class='engulf' id='eg3'>
-                <label for='age' class='descriptor'><br>Age&nbsp;</label>
-                <input id='tinp3' class='tinp' type='text' name='age'>
+                <span class='descriptor'><br>Age&nbsp;</span>
+                {{ form.age }}
             </div>
             <div class='engulf' id='eg4'>
                 <div class='gender_in'>
-                    <label for='gender' class='descriptor'><br>Gender&nbsp;</label>
-                    <select name='gender' id='gender'>
-                        <option value='1' selected='selected'>Male</option>
-                        <option value='1'>Female</option>
-                        <option value='1'>Other</option>
-                    </select>
+                    <span class='descriptor'><br>Gender&nbsp;</span>
+                    {{ form.gender }}
                 </div>
             </div>
             <div class='engulf' id='eg6'>
                 <div class='profession_in'>
-                    <label for='profession' class='descriptor'><br>Profession&nbsp;</label>
-                    <select name='profession' id='profession'>
-                        <option value='1' selected='selected'>Academic/Educator</option>
-                        <option value='2'>Artist</option>
-                        <option value='3'>Clerical/Admin</option>
-                        <option value='4'>College/Grad Student</option>
-                        <option value='5'>Customer Service</option>
-                        <option value='6'>Doctor/Health Care</option>
-                        <option value='7'>Executive/Managerial</option>
-                        <option value='8'>Farmer</option>
-                        <option value='9'>Homemaker</option>
-                        <option value='10'>K-12 Student</option>
-                        <option value='11'>Lawyer</option>
-                        <option value='12'>Programmer</option>
-                        <option value='13'>Retired</option>
-                        <option value='14'>Sales/Marketing</option>
-                        <option value='15'>Scientist</option>
-                        <option value='16'>Self-employed</option>
-                        <option value='17'>Technician/Engineer</option>
-                        <option value='18'>Tradesman/Craftsman</option>
-                        <option value='19'>Unemployed</option>
-                        <option value='20'>Writer</option>
-                        <option value='0'>Other</option>
-                    </select>
+                    <span class='descriptor'><br>Profession&nbsp;</span>
+                    {{ form.profession }}
                 </div>
             </div>
             <div class='engulf' id='eg7'>
                 <div class='country_in'>
-                    <label for='country' class='descriptor'><br>Country&nbsp;</label>
-                    <select name='country' id='country'>
-                        <option value='1' selected='selected'>India</option>
-                        <option value='1'>USA</option>
-                        <option value='1'>Other</option>
-                    </select>
+                    <span class='descriptor'><br>Country&nbsp;</span>
+                    {{ form.country }}
                 </div>
             </div>
             <div class='engulf' id='eg8'>
-                <label for='username' class='descriptor'><br>Username<br></label>
-                <input class='tinp' type='text' name='user'>
+                <span class='descriptor'><br>Username<br></span>
+                {{ form.username }}
             </div>
             <div class='engulf' id='eg9'>
-                <label for='password' class='descriptor'><br>Password<br></label>
-                <input class='tinp' type='password' name='password'>
+                <span class='descriptor'><br>Password<br></span>
+                {{ form.password1 }}
             </div>
             <div class='engulf' id='eg10'>
-                <label for='password2' class='descriptor'><br>Re-enter Password<br></label>
-                <input class='tinp' type='password' name='password2'><br>
+                <span class='descriptor'><br>Re-enter Password<br></span>
+                {{ form.password2 }}<br>
             </div>
             <input id='submit_but' type='submit' value='SUBMIT'/>
         </div>
     </form>
 
-   
+    {% if form.errors %}
+    <div id="form-error">
+	    <ul>
+	    {% for field in form %}
+            {% if field.errors %}
+	        <li>{{ field.name }} {{ field.errors|striptags }}</li>
+            {% endif %}
+	    {% endfor %}
+	    </ul>
+    </div>
+    {% endif %}
+
 
     <script>
         $(document).ready(function(){

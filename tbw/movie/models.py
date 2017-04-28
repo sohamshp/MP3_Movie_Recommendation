@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from movie.choices import *
 
 # Create your models here.
 class Movies(models.Model):
@@ -28,8 +30,18 @@ class Users(models.Model):
     age = models.IntegerField()
     age_group = models.CharField(max_length=6)
     occupation = models.CharField(max_length=100)
-    country = models.CharField(max_length=100, default="USA")
+    country = models.CharField(max_length=100, default="India")
 
+
+class Profile(models.Model):
+    username = models.OneToOneField(User, on_delete=models.CASCADE)
+    age = models.IntegerField()
+    age_group = models.CharField(max_length=6)
+    gender = models.CharField(choices=GENDER_CHOICES, default=1, max_length=100)
+    profession = models.CharField(choices=PROFESSION_CHOICES, default=1, max_length=100)
+    country = models.CharField(choices=COUNTRY_CHOICES, default=1, max_length=100)
+    image = models.FileField(upload_to='images/')
+    trained = models.BooleanField(default=False)
 
 class Ratings(models.Model):
     user = models.ForeignKey(Users)

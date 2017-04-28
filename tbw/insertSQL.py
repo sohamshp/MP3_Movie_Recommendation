@@ -42,16 +42,27 @@ conn.commit()
 '''
 
 ### Adding movies
-'''
+#'''
 
 file = pd.read_pickle('../res/small/movies2.pickle')
+file2 = pd.read_csv('../res/small/posters2.csv')
 
 movieId = list(file['movieId'])
 title = list(file['movieTitle'])
 year = list(file['movieYear'])
 genre = list(file['movieGenre'])
+poster = list(file2['poster'])
+imdb = list(file2['imdbId'])
+
+for i in range(len(poster)):
+    if type(poster[i]) == str:
+        print('1')
+    else:
+        poster[i] = ""
 
 length = len(title)
+
+print(poster)
 
 insertions = []
 
@@ -62,13 +73,15 @@ for i in range(10,length):
         title[i],
         int(year[i]),
         genre[i],
-        ""
+        poster[i],
+        int(imdb[i])
     )
     insertions.append(row)
-
-c.executemany("INSERT INTO movie_movieinfo VALUES (?,?,?,?,?,?)", insertions)
+#print(insertions)
+#c.execute("DELETE FROM movie_movieinfo")
+c.executemany("INSERT INTO movie_movieinfo VALUES (?,?,?,?,?,?,?)", insertions)
 conn.commit()
-'''
+#'''
 
 
 ### Adding Ratings
@@ -230,8 +243,8 @@ conn.commit()
 '''
 
 
-#for i in c.execute("SELECT count(*) FROM movie_ageavg"):
-#    print(i)
+for i in c.execute("SELECT count(*) FROM movie_movieinfo"):
+    print(i)
 
 c.close()
 conn.close()

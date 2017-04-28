@@ -2,600 +2,89 @@
 <html>
 <head>
 {% load staticfiles %}
-<script src="{% static 'movie/js/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'movie/js/jquery-3.1.1.min.js'%}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'movie/css/movie_page.css'%}">
 <title>TBW | The Binge Watcher</title>
-
-<style>
-@font-face {
-    font-family: 'KatahdinRound';
-    src: url("{% static 'movie/fonts/KatahdinRound.otf'%}") format("opentype");
-}
-
-@font-face {
-    font-family: 'Open Sans Condensed';
-    src: url("{% static 'movie/fonts/OpenSansCondensed.ttf'%}") format("truetype");
-}
-
-
-body,html{
-    height:100%;
-    width:100%;
-    margin:0;
-    padding:0;
-    font-size:100%;
-}
-
-/*############################# Borders #################################*/
-
-
-#bord1{
-    height:40px;
-    width:100%;
-    position:fixed;
-    top:0%;
-    left:0%;
-    background-color: white; 
-}
-
-#bord2{
-    height:100%;
-    width:40px;
-    position:fixed;
-    top:0%;
-    right:0%;
-    background-color: white; 
-}
-
-#bord3{
-    height:40px;
-    width:100%;
-    position:fixed;
-    bottom:0%;
-    left:0%;
-    background-color: white; 
-}
-
-#bord4{
-    height:100%;
-    width:40px;
-    position:fixed;
-    top:0%;
-    left:0%;
-    background-color: white; 
-}
-
-
-/* ######################### navbar ##########################*/
-
-
-
-#navigation{
-    position:fixed;
-    right:4%;
-    top:40px;
-}
-
-.navbut{
-    padding:10px;
-    padding-bottom:5px;
-    font-family:'katahdinRound';
-    color: white;
-    font-size:1em;
-    display:inline;
-    cursor:default;
-}
-
-.active{
-    background-color: rgba(255,255,255,0.2);
-}
-
-.navbut:hover{
-    background-color: rgba(255,255,255,0.2);
-}
-
-
-
-/*############################# Search bar ##################################*/
-
-
-
-#search{
-    position:fixed;
-    right:5%;
-    top:80px;
-    padding:5px;
-    border-bottom: 1px solid white;
-    width:13%;
-    padding-right:2%;
-}
-
-#search_tag{
-    width:90%;
-    border-color:transparent;
-    outline:none;
-    background-color:transparent;
-    font-family:'katahdinRound';
-    color: black;
-    font-size:0.8em;
-}
-
-#search_tag:focus{
-    border-color:transparent;
-    outline:none;
-    background-color:transparent;
-}
-
-#mag{
-    width:20%;
-    height:60%;
-    position:absolute;
-    top:20%;
-    right:-5%;
-    //background-image:url('images/mag.png');
-    background-image: url("{% static 'movie/images/map.png' %}");
-    background-size:contain;
-    background-position: center left;
-    background-repeat: no-repeat;
-}
-
-
-/*###############################body#############################*/
-
-
-
-#side_color1{
-    height:100%;
-    width:100%;
-    background-color:#00aced;
-    position:absolute;
-    left:0%;
-    top:0%;
-}
-
-
-.movie_span{
-    height:50%;
-    position:absolute;
-    left:5%;
-    top:8%;
-    border: 20px solid rgba(255,255,255,0.2);
-    //background-color:rgba(255,255,255,0.2);
-}
-
-.poster_img{
-    height:97%;
-    border:5px solid white;
-}
-
-#ar1{
-    width: 0; 
-    height: 0; 
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-    border-right: 30px solid rgba(255,255,255,0.2);
-    position:absolute;
-    top:10%;
-    right:95%;
-}
-
-#ar2{
-    width: 0; 
-    height: 0; 
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-    border-right: 30px solid rgba(255,255,255,0.2);
-    position:absolute;
-    top:72%;
-    right:95%;
-}
-
-#ar3{
-    width: 0; 
-    height: 0; 
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-    border-left: 30px solid rgba(255,255,255,0.2);
-    position:absolute;
-    top:65%;
-    left:95%;
-}
-
-#desc{
-    position: absolute;
-    height:40%;
-    width:30%;
-    //background-color:white;
-    left:28%;
-    top:10%;
-}
-
-#movie_tit{
-    font-size:2.5em;
-    font-family: "KatahdinRound";
-    color:white;
-    line-height: 1;
-}
-
-#genres{
-    font-family: "Open Sans Condensed";
-    font-size:1em;
-    color:black;
-}
-
-#year{
-    font-family: "Open Sans Condensed";
-    font-size:1em;
-    color:white;
-}
-
-#description{
-    font-family: "Open Sans Condensed";
-    font-size:1em;
-    color:white;
-}
-
-#rate_graph{
-    position:absolute;
-    left:28%;
-    top:50%;
-}
-
-#rate_cards{
-    height:8%;
-    width:20%;
-    position:absolute;
-    left:28%;
-    bottom:5%;
-}
-
-.rate_card{
-    position:relative;
-    display:inline-block;
-    float:left;
-    width:20%;
-    height:100%;
-}
-
-#rate_card1{
-    width:40%;
-    background-color:rgba(255,255,255,0.8);
-}
-
-#rate_card2{
-    background-color:rgba(255,255,255,0.7);
-}
-
-#rate_card3{
-    background-color:rgba(255,255,255,0.6);
-}
-
-#rate_card4{    
-    background-color:rgba(255,255,255,0.5);
-}
-
-
-#rate_card1:hover{
-    background-color:white;
-}
-
-#rate_card2:hover{
-    background-color:white;
-}
-
-#rate_card3:hover{
-    background-color:white;
-}
-
-#rate_card4:hover{
-    background-color:white;
-}
-
-.rate_txt{
-    font-family:"Open Sans Condensed";
-    font-size:0.8em;
-    position:absolute;
-    left:50%;
-    top:50%;
-    color:black;
-    transform: translate(-50%,-50%);
-}
-
-#castndir{
-    height:21%;
-    width:17.5%;
-    position:absolute;
-    left:5%;
-    top:70%;
-    background-color:rgba(255,255,255,0.2);
-    padding:1%;
-}
-
-.casthead{
-    font-size:1em;
-    font-family:"katahdinRound";
-    color: white;
-}
-
-.castdes{
-    font-size:0.9em;
-    font-family: "Open Sans Condensed";
-    color:white;
-}
-
-#recomm{
-    height:25%;
-    position: absolute;
-    right:5%;
-    bottom: 5%;
-    padding-bottom:28px;
-    background-color:rgba(255,255,255,0.2);
-    border:10px solid rgba(51,189,241,1);
-}
-
-.recomm_poster{
-    display:inline-block;
-    float:left;
-    height:100%;
-    border:2px solid white;
-    margin:4px;
-}
-
-#recomm_des{
-    font-family: "KatahdinRound";
-    color:white;
-    font-size:1em;
-}
-
-.logo{
-    width:2%;
-    position:absolute;
-    bottom:75%;
-}
-
-.logow{
-    width:2%;
-    position:absolute;
-    bottom:75%;
-    opacity:0;
-}
-
-#gb{
-    right:7.5%;
-}
-
-#fb{
-    right:5%;
-}
-
-#gbw{
-    right:7.5%;
-}
-
-#fbw{
-    right:5%;
-}
-
-.logow:hover{
-    opacity:1;
-}
-
-.logo:hover{
-    opacity:0;
-}
-
-#logodes{
-    font-family: "Open Sans Condensed";
-    font-size:1em;
-    line-height:1;
-    color:black;
-    text-align: right;
-    position:absolute;
-    top:26%;
-    right:5%;
-}
-
-#match{
-    position:absolute;
-    left:68%;
-    top:40%;
-}
-
-#match_per{
-    font-family: "KatahdinRound";
-    font-size:4em;
-    color: white;
-    line-height:1;
-}
-
-#match_des{
-    font-family: "Open Sans Condensed";
-    font-size: 1.5em;
-    color: white;
-    line-height:1;
-}
-
-#match_des2{
-    font-family: "Open Sans Condensed";
-    font-size: 1em;
-    color: white;
-    line-height:1;
-}
-
-#TBW{
-    font-family: "Open Sans Condensed";
-    font-size:1em;
-    color:white;
-    position: absolute;
-    top:1%;
-    left:1%;
-}
-
-
-
-/*########################################login tab###################################*/
-
-#login_detail{
-    position:fixed;
-    background-color:transparent;
-    height:120px;
-    width:20%;
-    right:40px;
-    top:-190px;//70px;
-}
-
-#l_d_triangle{
-    width: 0; 
-    height: 0; 
-    border-bottom: 20px solid white;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    position:absolute;
-    top:0%;
-    right:30px;
-}
-
-#l_d_box{
-    position: absolute;
-    height:100%;
-    width:100%;
-    top: 20px;
-    background-color:white;
-}
-
-#l_d_img_container{
-    overflow:hidden;
-    position:absolute;
-    width:40%;
-    height:110px;
-    left:5px;
-    top:5px;
-}
-
-#l_d_img{
-    width:100%;
-}
-
-#l_d_name{
-    color:black;
-    width:50%;
-    text-align:left;
-    font-family:'katahdinRound';
-    font-size:1em;
-    padding-left:45%;
-    padding-top:5px;
-}
-
-#l_d_logout{
-    color:black;
-    width:50%;
-    text-align:left;
-    font-family:'Open Sans Condensed';
-    font-size:1em;
-    left:45%;
-    position:absolute;
-    bottom:6px;
-    text-align:right;
-    padding-right: 5px;
-    padding-bottom:5px;
-    border-top:1px solid #00aced;
-    cursor: default;
-}
-
-#l_d_logout:hover{
-    background-color:#eeeeee;
-}
-
-#l_d_usr{
-    color:black;
-    width:50%;
-    text-align:left;
-    font-family:'Open Sans Condensed';
-    font-size:0.8em;
-    margin-left:45.5%;
-    text-align:left;
-    padding-right: 5px;
-    padding-top:2px;
-}
-
-
-
-</style>
 </head>
 <body>   
     <div id='side_color1'></div>
 
     <div id='navigation'>
-        <div id='home_but' class='navbut'>HOME</div>
-        <div class='navbut'>ABOUT</div>
-        <div class='navbut'>GENRES</div>
-        <div class='navbut' id='login_but_checked'>LOGIN</div>
+        <a id='home_but' class='navbut' href="{% url 'movie:index' %}">HOME</a>
+        <a id='about_but' class='navbut'>ABOUT</a>
+        <a id='rated_but' class='navbut' href="{% url 'movie:rated' %}">MOVIES</a>
+        {% if user.is_authenticated %}
+        <a class='navbut' id='login_but_checked'>WATCHER</a>
+        {% else %}
+        <a class='navbut' id='login_but_checked' href="{% url 'movie:login' %}">LOGIN</a>
+        {% endif %}
     </div>
-    
-    <form action='#' method='post' id='search'>
-        <input type='text' id='search_tag' name='search_tag'/>
-        <div id='mag'></div>
-    </form>
 
     <div class='movie_span'>
-        <img class='poster_img' src="{% static 'movie/images/cat5.jpg' %}"/>
+        <img id='poster_img' src="{% static 'movie/images/cat5.jpg'%}"/>
     </div>
     <div id="ar1"></div>
     
     <div id='desc'>
-        <span id='movie_tit'>{{ movie.name }}<br></span>
-        <span id='year'>{{ movie.year }}<br></span>
-        <span id='genres'>{{ movie.genre }}<br><br></span>
-        <span id='description'>In the near future, a weary Logan cares for an ailing Professor X somewhere on the Mexican border. 
-            However, Logan's attempts to hide from the world and his legacy are upended when a 
-            young mutant arrives, pursued by dark forces.</span> 
+        <span id='movie_tit'><br></span>
+        <span id='year'><br></span>
+        <span id='genres'><br><br></span>
+        <span id='description'></span>
     </div>
 
     <canvas id='rate_graph' height="165px" width="400px"></canvas>
 
     <div id='rate_cards'>
-        <div id='rate_card1' class='rate_card'>
+        <div id='rate_card1' rate="5" class='rate_card'>
             <span class='rate_txt'>LOVE</span>
         </div>
-        <div id='rate_card2' class='rate_card'>
+        <div id='rate_card2' rate="4" class='rate_card'>
             <span class='rate_txt'>LIKE</span>
         </div>
-        <div id='rate_card3' class='rate_card'>
+        <div id='rate_card3' rate="3" class='rate_card'>
             <span class='rate_txt'>SAVE</span>
         </div>
-        <div id='rate_card4' class='rate_card'>
+        <div id='rate_card4' rate="2" class='rate_card'>
             <span class='rate_txt'>NAH</span>
         </div>
     </div>
 
     <div id='castndir'>
         <span class='casthead'>CAST<br></span>
-        <span class='castdes'>Hugh Jackman, Patrick Stewart, Dafne Keen<br><br></span>
+        <span class='castdes' id="actors"><br><br></span>
         <span class='casthead'>DIRECTORS<br></span>
-        <span class='castdes'>James Mangold<br></span>
+        <span class='castdes' id="directors"><br></span>
     </div>
 
     <div id="ar2"></div>
 
     <div id='recomm'>
         <span id='recomm_des'>SIMILAR<br></span>
-        <img class='recomm_poster' src="{% static 'movie/images/cat4.jpg' %}"/>
-        <img class='recomm_poster' src="{% static 'movie/images/cat5.jpg' %}"/>
-        <img class='recomm_poster' src="{% static 'movie/images/cat3.jpg' %}"/>
+        <img class='recomm_poster' src="{% static 'movie/images/cat4.jpg'%}"/>
+        <img class='recomm_poster' src="{% static 'movie/images/cat5.jpg'%}"/>
+        <img class='recomm_poster' src="{% static 'movie/images/cat3.jpg'%}"/>
     </div>
     
     <div id="ar3"></div>
 
-    <img class='logo' id='gb' src="{% static 'movie/logos/git_black.png' %}"/>
-    <img class='logo' id='fb' src="{% static 'movie/logos/fb_black.png' %}"/>
-    <img class='logow' id='gbw' src="{% static 'movie/logos/git_white.png' %}"/>
-    <img class='logow' id='fbw' src="{% static 'movie/logos/fb_white.png' %}"/>
+    <img class='logo' id='gb' src="{% static 'movie/logos/git_black.png'%}"/>
+    <img class='logo' id='fb' src="{% static 'movie/logos/fb_black.png'%}"/>
+    <img class='logow' id='gbw' src="{% static 'movie/logos/git_white.png'%}"/>
+    <img class='logow' id='fbw' src="{% static 'movie/logos/fb_white.png'%}"/>
     <span id='logodes'>Fork us on github or find<br>us on facebook.</span>
 
     <div id='match'>
-        <span id='match_per'>98%</span>
+        <span id='match_per'>{{ rate }}%</span>
         <span id='match_des'><i>match</i><br></span>
         <span id='match_des2'>&nbsp;with your taste in cinematography.</span>
     </div>
+
+    <form action='#' method='post' id='search'>
+        <input type='text' id='search_tag' name='search_tag'/>
+        <div id='mag'></div>
+    </form>
+
+    <div id='search_result'></div>
 
     <span id='TBW'>TBW</span>
 
@@ -603,10 +92,10 @@ body,html{
         <div id='l_d_triangle'></div>
         <div id='l_d_box'>
             <div id='l_d_img_container'>
-                <img id='l_d_img' src="{% static 'movie/images/boruto.jpg' %}"/>
+                <img id='l_d_img' src="{{ imgURL }}"/>
             </div>
-            <div id='l_d_name'>Shivang Singh</div>
-            <div id='l_d_usr'>Zeke_3</div>
+            <div id='l_d_name'>{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</div>
+            <div id='l_d_usr'>{{ request.user.username }}</div>
             <div id='l_d_logout'>Logout</div>
         </div>
     </div>
@@ -614,34 +103,41 @@ body,html{
 <script>
     var can = document.getElementById("rate_graph");
     var ctx = can.getContext("2d");
+    var c_x, c_y, c_z;
     ctx.fillStyle="#ffffff";
     ctx.strokeStyle="#ffffff";
     ctx.lineWidth="1";
 
     function plotter(x,y,z){
 
-        ctx.moveTo(30,x*130);
-        ctx.lineTo(130,y*130);
+        ctx.clearRect(0,0,400,130);
+
+        ctx.fillStyle="#ffffff";
+        ctx.strokeStyle="#ffffff";
+        ctx.lineWidth="1";
+
+        ctx.moveTo(30,x*120 + 10);
+        ctx.lineTo(130,y*120 + 10);
         ctx.stroke();
 
-        ctx.moveTo(130,y*130);
-        ctx.lineTo(230,z*130);
+        ctx.moveTo(130,y*120 + 10);
+        ctx.lineTo(230,z*120 + 10);
         ctx.stroke();
 
         ctx.lineWidth="2";
 
         ctx.beginPath();
-        ctx.arc(30,x*130,8,0,2*Math.PI);
+        ctx.arc(30,x*120 + 10,8,0,2*Math.PI);
         ctx.fill();
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(132,y*130,8,0,2*Math.PI);
+        ctx.arc(132,y*120 + 10,8,0,2*Math.PI);
         ctx.fill();
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(240,z*130,8,0,2*Math.PI);
+        ctx.arc(240,z*120 + 10,8,0,2*Math.PI);
         ctx.fill();
         ctx.stroke();
 
@@ -649,18 +145,19 @@ body,html{
         ctx.lineWidth="2";
 
         ctx.beginPath();
-        ctx.arc(30,x*130,7,0,2*Math.PI);
+        ctx.arc(30,x*120 + 10,7,0,2*Math.PI);
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(132,y*130,7,0,2*Math.PI);
+        ctx.arc(132,y*120 + 10,7,0,2*Math.PI);
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(240,z*130,7,0,2*Math.PI);
+        ctx.arc(240,z*120 + 10,7,0,2*Math.PI);
         ctx.stroke();
 
     }
 
-    function graph_construct(){
+    function graph_construct(x,y,z){
+        ctx.clearRect(0,132,400,165);
         ctx.strokeStyle="#ffffff";
         ctx.lineWidth="1";
         ctx.moveTo(0,130);
@@ -672,16 +169,55 @@ body,html{
         ctx.fillText("TBW",120,150);
         ctx.fillText("Rotten Tomatoes",210,150);
         ctx.font="10px Arial";
-        ctx.fillText("9.0",10,165); 
-        ctx.fillText("7.0",120,165); 
-        ctx.fillText("8.0",210,165);        
+        ctx.fillText(x,10,165);
+        ctx.fillText(y,120,165);
+        ctx.fillText(z,210,165);
     }
 
-    graph_construct();
-    plotter(0.1,0.4,0.2);
+    function animate_plotter(){
+        if(c_x<x || c_y<y || c_z<z){
+            plotter(c_x,c_y,c_z);
+            if(c_x<x)
+                c_x+=0.01;
+            if(c_y<y)
+                c_y+=0.01;
+            if(c_z<z)
+                c_z+=0.01;
+            setTimeout(animate_plotter,30);
+        }
+    }
+
+    c_x=0.0;
+    c_y=0.0;
+    c_z=0.0;
+    x=0;
+    y=0;
+    z=0;
+    graph_construct(1.0,1.0,1.0);
+    plotter(c_x,c_y,c_z);
+
+
+
+    function imdb_retrieve(e){
+        var imdb=e.getAttribute('imdb');
+        window.location='{% url 'movie:index' %}' + imdb;
+    }
+
 
     $(document).ready(function(){
+            $('#search_tag').keyup(function(){
+                var c = $('#search_tag').val();
+                $.getJSON("{% url 'movie:searchres' %}",{ key : c },function(result){
+                    $('#search_result').html("");
+                    $.each(result["divset"], function(i, val){
+                        $('#search_result').append(val);
+                    });
+                });
+            });
+
             var toggle_login = 0;
+
+            {% if user.is_authenticated %}
 
             $('#login_but_checked').click(function(){
                 if(toggle_login == 0){
@@ -698,6 +234,42 @@ body,html{
                     toggle_login=0;
                 }
             });
+
+            $('.rate_card').click(function() {
+                    var rate = $(this).attr("rate");
+                    $.getJSON("{% url 'movie:setLiking' %}", { 'rate': rate, 'crude': "{{ crude }}" }, function(result) {
+                        window.location = "{% url 'movie:rated' %}"
+                    });
+
+                });
+
+            {% endif %}
+
+            $.getJSON("http://www.omdbapi.com/?i=tt{{ movie_id }}",function(result){
+                //3315342
+                $('#movie_tit').html(result['Title']+"<br>");
+                $('#poster_img').attr("src",result['Poster']);
+                $('#year').html(result['Year']+"<br>");
+                $('#genres').html(result['Genre']+"<br><br>");
+                $('#description').html(result['Plot']);
+                $('#actors').html(result['Actors']+"<br><br>");
+                $('#directors').html(result['Director']+"<br><br>");
+
+                x=1-result['imdbRating']/10;
+                y=0.6;
+                z=0.35;
+                graph_construct(1-x,1-y,1-z);
+                animate_plotter();
+            });
+
+            {% if user.is_authenticated %}
+                $('#l_d_logout').click(function(){
+                    $.getJSON("{% url 'movie:logout' %}", function(result){
+                        location.reload(true);
+                      }
+                    );
+                });
+            {% endif %}
     });
 
 </script>

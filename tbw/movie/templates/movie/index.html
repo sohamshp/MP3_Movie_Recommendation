@@ -4,7 +4,6 @@
 {% load staticfiles %}
 <script type="text/javascript" src="{% static 'movie/js/jquery-3.1.1.min.js'%}"></script>
 <title>TBW | The Binge Watcher</title>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{% static 'movie/css/index.css'%}">
 </head>
 <body>
@@ -15,13 +14,6 @@
         <span id='the'>THE</span>
         <span id='binge'><b>BIN<br>GE</b></span>
         <p id='watcher'><span id='white_watcher'>WATCH</span>&nbsp;&nbsp;&nbsp;ER.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
-    </div>
-
-    <div id='navigation'>
-        <div id='home_but' class='navbut active'>HOME</div>
-        <div class='navbut'>ABOUT</div>
-        <div class='navbut'>GENRES</div>
-        <div class='navbut' id='login_but'>LOGIN</div>
     </div>
 
     <form action='#' method='post' id='search'>
@@ -39,16 +31,16 @@
         </div>-->
     </div>
 
-    <form id='login_form' action='#' method='post'>
+    <form id='login_form' action='' method='post'>
         {% csrf_token %}
         <div class='ip_area'>
-            <label for='usr' id='usr_label'><b>USERNAME:&nbsp;&nbsp;</b></label>
-            <input type='text' id='usr' class='ipt' name='usr'><br>
+            <span id='usr_label'><b>USERNAME:&nbsp;&nbsp;</b></span>
+            {{ form.username }}
         </div>
         <div class='ip_area'>
             <br>
-            <label for='pass' id='pass_label'><b>PASSWORD:&nbsp;&nbsp;</b></label>
-            <input type='password' id='pass' class='ipt' name='pass'><br>
+            <span id='pass_label'><b>PASSWORD:&nbsp;&nbsp;</b></span>
+            {{ form.password }}
         </div>
         <div class='sq_area'>
             <br>
@@ -60,10 +52,36 @@
             <button id='f_but' class='s_but' type='button'>f</button>
             <br>
         </div>
-        <div id='sup_area'><b><a href='#' class='sup'>FORGOT PASSWORD</a> OR <a href='#' class='sup'>SIGN UP</a></b></div>
+        <div id='sup_area'><b><a href='#' class='sup'>FORGOT PASSWORD</a> OR <a href="{% url 'movie:signup' %}" class='sup'>SIGN UP</a></b></div>
         <div id='cover'></div>
     </form>
 
+    {% if user.is_authenticated %}
+    <div id='login_detail'>
+        <div id='l_d_triangle'></div>
+        <div id='l_d_box'>
+            <div id='l_d_img_container'>
+                <img id='l_d_img' src="{{ imgURL }}"/>
+            </div>
+            <div id='l_d_name'>{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</div>
+            <div id='l_d_usr'>{{ request.user.username }}</div>
+            <div id='l_d_logout'>Logout</div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div id='navigation'>
+        <a id='home_but' class='navbut active'>HOME</a>
+        <a id='about_but' class='navbut'>ABOUT</a>
+        <a id='rated_but' class='navbut' href="{% url 'movie:rated' %}">MOVIES</a>
+        <a class='navbut' id='login_but'>{% if user.is_authenticated %}
+                WATCHER
+                {% else %}
+                LOGIN
+                {% endif %}
+        </a>
+    </div>
 
     <div id='bord1'></div>
     <div id='bord2'></div>
@@ -71,6 +89,13 @@
     <div id='bord4'></div>
 
     <script>
+
+        function imdb_retrieve(e){
+            var imdb=e.getAttribute('imdb');
+            window.location='{% url 'movie:index' %}' + imdb;
+        }
+
+
         $(document).ready(function(){
             var midwinw = $(window).width()/2;
             var midwinh = $(window).height()/2;
@@ -89,7 +114,25 @@
                 });
             });
 
+            var toggle_login = 0;
+
             $('#login_but').click(function(){
+                {% if user.is_authenticated %}
+                if(toggle_login == 0){
+                    $('#login_detail').animate({
+                        top: "80px"
+                    },500);
+                    toggle_login=1;
+                }
+
+                else{
+                    $('#login_detail').animate({
+                        top: "-180px"
+                    },500);
+                    toggle_login=0;
+                }
+
+                {% else %}
                 $('#side_color1').animate({
                     width: '35%'
                 },500);
@@ -109,7 +152,21 @@
                 $('#home_but').removeClass('active');
 
                 $('#login_but').addClass('active');
+                {% endif %}
+
             });
+
+            {% if user.is_authenticated %}
+                $('#l_d_logout').click(function(){
+                    $.getJSON("{% url 'movie:logout' %}", function(result){
+                        location.reload(true);
+                      }
+                    );
+                });
+            {% endif %}
+
+
+
         });
     </script>
 </body>

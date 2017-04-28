@@ -4,6 +4,11 @@
     src: url("fonts/KatahdinRound.otf") format("opentype");
 }
 
+@font-face {
+    font-family: 'Open Sans Condensed';
+    src: url("fonts/OpenSansCondensed.ttf") format("truetype");
+}
+
 body,html{
     height:100%;
     width:100%;
@@ -133,6 +138,15 @@ body,html{
     font-size:1em;
     display:inline;
     cursor:default;
+    text-decoration:none;
+}
+
+.navbut:visited{
+    color:black;
+}
+
+.navbut:active{
+    color:black;
 }
 
 .active{
@@ -347,3 +361,94 @@ body,html{
     top:0%;
     left:0%;
 }
+
+
+
+/*########################################login tab###################################*/
+
+#login_detail{
+    position:fixed;
+    background-color:transparent;
+    height:120px;
+    width:20%;
+    right:50px;
+    top:-180px;//60px;
+}
+
+#l_d_triangle{
+    width: 0;
+    height: 0;
+    border-bottom: 20px solid #f5f5f5;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    position:absolute;
+    top:0%;
+    right:30px;
+}
+
+#l_d_box{
+    position: absolute;
+    height:100%;
+    width:100%;
+    top: 20px;
+    background-color:#f5f5f5;
+}
+
+#l_d_img_container{
+    overflow:hidden;
+    position:absolute;
+    width:40%;
+    height:110px;
+    left:5px;
+    top:5px;
+}
+
+#l_d_img{
+    width:100%;
+}
+
+#l_d_name{
+    color:#555555;
+    width:50%;
+    text-align:left;
+    font-family:'katahdinRound';
+    font-size:1em;
+    padding-left:45%;
+    padding-top:5px;
+}
+
+#l_d_logout{
+    color:#555555;
+    width:50%;
+    text-align:left;
+    font-family:'Open Sans Condensed';
+    font-size:1em;
+    left:45%;
+    position:absolute;
+    bottom:6px;
+    text-align:right;
+    padding-right: 5px;
+    padding-bottom:5px;
+    border-top:1px solid #dddddd;
+    cursor: default;
+}
+
+#l_d_logout:hover{
+    background-color:#dddddd;
+}
+
+#l_d_usr{
+    color:#555555;
+    width:50%;
+    text-align:left;
+    font-family:'Open Sans Condensed';
+    font-size:0.8em;
+    margin-left:45.5%;
+    text-align:left;
+    padding-right: 5px;
+    padding-top:2px;
+}
+
+
+
+
